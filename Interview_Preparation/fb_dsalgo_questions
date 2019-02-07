@@ -1242,6 +1242,95 @@ Time Complexity: O(n)
 Reference : 
 https://www.careercup.com/question?id=13382661
 
+15) https://www.interviewbit.com/problems/unique-paths-in-a-grid/ - >Given a grid of size m * n, lets assume you are starting at (1,1) 
+and your goal is to reach (m,n). At any instance, if you are on (x,y), you can either go to (x, y + 1) or (x + 1, y).
+
+Now consider if some obstacles are added to the grids. How many unique paths would there be?
+An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+
+Example :
+There is one obstacle in the middle of a 3x3 grid as illustrated below.
+
+[
+  [0,0,0],
+  [0,1,0],
+  [0,0,0]
+]
+The total number of unique paths is 2.
+
+Solution -> not given
+
+16)https://www.interviewbit.com/problems/ways-to-decode/ -> A message containing letters from A-Z is being encoded to numbers using the following mapping:
+
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+Given an encoded message containing digits, determine the total number of ways to decode it.
+
+Example :
+
+Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+
+The number of ways decoding "12" is 2.
+
+Solution -> not given
+
+17)https://www.interviewbit.com/problems/regular-expression-match/ -> Implement wildcard pattern matching with support for '?' and '*'.
+
+'?' : Matches any single character.
+'*' : Matches any sequence of characters (including the empty sequence).
+The matching should cover the entire input string (not partial).
+
+The function prototype should be:
+
+int isMatch(const char *s, const char *p)
+Examples :
+
+isMatch("aa","a") → 0
+isMatch("aa","aa") → 1
+isMatch("aaa","aa") → 0
+isMatch("aa", "*") → 1
+isMatch("aa", "a*") → 1
+isMatch("ab", "?*") → 1
+isMatch("aab", "c*a*b") → 0
+Return 1/0 for this problem.
+
+
+18)https://www.interviewbit.com/problems/reverse-link-list-ii/ - > Reverse a linked list from position m to n. Do it in-place and in one-pass.
+
+For example:
+Given 1->2->3->4->5->NULL, m = 2 and n = 4,
+
+return 1->4->3->2->5->NULL.
+
+ Note:
+Given m, n satisfy the following condition:
+1 ≤ m ≤ n ≤ length of list. Note 2:
+Usually the version often seen in the interviews is reversing the whole linked list which is obviously an easier version of this question. 
+
+
+Solution -> not given
+
+
+19) https://www.careercup.com/page?pid=facebook-interview-questions - > Given a list of arrays of time intervals, write a function that calculates the total amount of time covered by the intervals. 
+For example: 
+input = [(1,4), (2,3)] 
+return 3 
+input = [(4,6), (1,2)] 
+return 3 
+input = {{1,4}, {6,8}, {2,4}, {7,9}, {10, 15}} 
+return 11
+
+Solution -> not verified
+
+
+20)https://www.careercup.com/question?id=5661122112258048 -> given an array representing a non-negative integer 
+(ex: 123 represented as [1,2,3]), return the next integer (output: [1,2,4]). 
+run through all edge cases (ex: [9,9,9,9,9,9,9,9] etc).
+
+
+
 
 
 
