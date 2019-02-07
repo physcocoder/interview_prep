@@ -1,1 +1,431 @@
-1)
+1) https://www.geeksforgeeks.org/amazon-interview-experience-sde-ll/  -> Count ways to reach nth stair.It is similar to
+ the fibonacci series. Interviewer asked various ways to
+ implement the same -Recursion, 1-D array, with 3 variables and complexity of each.
+ 
+ 
+Solution -> not given
+
+
+2) 	https://www.geeksforgeeks.org/amazon-sde-2-experience-6-5-years-exp/  -> Code to implement file system name by 
+integer where you can add/delete file by lowest integer val available.
+
+Solution -> not given.
+
+
+3)https://www.geeksforgeeks.org/amazon-sde-2-experience-6-5-years-exp/ - > Implement an arraylist
+
+4)https://www.geeksforgeeks.org/amazon-interview-experience-set-324-sde2/ -> Two string a haystack and needle is given
+ find at what all indexes needle occurs in haystack as an anagram(0 based indexing)
+INPUT: str1 = "ABACDABCABA" , str2 = "BA"
+OUTPUT: 0,15,8,9
+Expected time complexity is O(n). The only thing to pay attention was that ASCII characters starts from A.
+
+
+Solution -> not given
+
+4)https://www.geeksforgeeks.org/amazon-interview-experience-set-324-sde2/ - > Given A company’s hierarchy where each 
+employee reports to exactly one manager. and one manager can be reported by multiple employees, implement necessary setter getter functions in object oriented way. also write a helper instance methods to return lowest common manager for two given employees
+answer to this question was simple but had to write object oriented code and zip it then upload it.
+
+
+Solution -> not given
+
+5) https://www.geeksforgeeks.org/given-sorted-dictionary-find-precedence-characters/  -> perm_identity
+Given a sorted dictionary of an alien language, find order of characters
+Given a sorted dictionary (array of words) of an alien language, find order of characters in the language.
+Examples:
+
+Input:  words[] = {"baa", "abcd", "abca", "cab", "cad"}
+Output: Order of characters is 'b', 'd', 'a', 'c'
+Note that words are sorted and in the given language "baa" 
+comes before "abcd", therefore 'b' is before 'a' in output.
+Similarly we can find other orders.
+
+Input:  words[] = {"caa", "aaa", "aab"}
+Output: Order of characters is 'c', 'a', 'b'
+
+Solution -> The idea is to create a graph of characters and then find topological sorting of the created graph. Following are the detailed steps.
+
+1) Create a graph g with number of vertices equal to the size of alphabet in the given alien language. For example, if the alphabet size is 5, then there can be 5 characters in words. Initially there are no edges in graph.
+
+2) Do following for every pair of adjacent words in given sorted array.
+…..a) Let the current pair of words be word1 and word2. One by one compare characters of both words and find the first mismatching characters.
+…..b) Create an edge in g from mismatching character of word1 to that of word2.
+
+3) Print topological sorting of the above created graph.
+
+Following is the implementation of the above algorithm.
+filter_none
+edit
+play_arrow
+
+brightness_4
+// A Java program to order of  
+// characters in an alien language 
+import java.util.*; 
+  
+// Class to represent a graph 
+class Graph 
+{ 
+  
+    // An array representing the graph as an adjacency list 
+    private final LinkedList<Integer>[] adjacencyList; 
+  
+    Graph(int nVertices) 
+    { 
+        adjacencyList = new LinkedList[nVertices]; 
+        for (int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++) 
+        { 
+            adjacencyList[vertexIndex] = new LinkedList<>(); 
+        } 
+    } 
+  
+    // function to add an edge to graph 
+    void addEdge(int startVertex, int endVertex) 
+    { 
+        adjacencyList[startVertex].add(endVertex); 
+    } 
+  
+    private int getNoOfVertices() 
+    { 
+        return adjacencyList.length; 
+    } 
+  
+    // A recursive function used by topologicalSort 
+    private void topologicalSortUtil(int currentVertex, boolean[] visited, 
+                                     Stack<Integer> stack) 
+    { 
+        // Mark the current node as visited. 
+        visited[currentVertex] = true; 
+  
+        // Recur for all the vertices adjacent to this vertex 
+        for (int adjacentVertex : adjacencyList[currentVertex]) 
+        { 
+            if (!visited[adjacentVertex]) 
+            { 
+                topologicalSortUtil(adjacentVertex, visited, stack); 
+            } 
+        } 
+  
+        // Push current vertex to stack which stores result 
+        stack.push(currentVertex); 
+    } 
+  
+    // prints a Topological Sort of the complete graph 
+    void topologicalSort() 
+    { 
+        Stack<Integer> stack = new Stack<>(); 
+  
+        // Mark all the vertices as not visited 
+        boolean[] visited = new boolean[getNoOfVertices()]; 
+        for (int i = 0; i < getNoOfVertices(); i++) 
+        { 
+            visited[i] = false; 
+        } 
+  
+        // Call the recursive helper function to store Topological  
+        // Sort starting from all vertices one by one 
+        for (int i = 0; i < getNoOfVertices(); i++) 
+        { 
+            if (!visited[i]) 
+            { 
+                topologicalSortUtil(i, visited, stack); 
+            } 
+        } 
+  
+        // Print contents of stack 
+        while (!stack.isEmpty()) 
+        { 
+            System.out.print((char)('a' + stack.pop()) + " "); 
+        } 
+    } 
+} 
+  
+public class OrderOfCharacters 
+{ 
+    // This function fidns and prints order 
+    // of characer from a sorted array of words. 
+    // alpha is number of possible alphabets  
+    // starting from 'a'. For simplicity, this 
+    // function is written in a way that only 
+    // first 'alpha' characters can be there  
+    // in words array. For example if alpha 
+    //  is 7, then words[] should contain words 
+    // having only 'a', 'b','c' 'd', 'e', 'f', 'g' 
+    private static void printOrder(String[] words, int alpha) 
+    { 
+        // Create a graph with 'aplha' edges 
+        Graph graph = new Graph(alpha); 
+  
+        for (int i = 0; i < words.length - 1; i++) 
+        { 
+            // Take the current two words and find the first mismatching 
+            // character 
+            String word1 = words[i]; 
+            String word2 = words[i+1]; 
+            for (int j = 0; j < Math.min(word1.length(), word2.length()); j++) 
+            { 
+                // If we find a mismatching character, then add an edge 
+                // from character of word1 to that of word2 
+                if (word1.charAt(j) != word2.charAt(j)) 
+                { 
+                    graph.addEdge(word1.charAt(j) - 'a', word2.charAt(j)- 'a'); 
+                    break; 
+                } 
+            } 
+        } 
+  
+        // Print topological sort of the above created graph 
+        graph.topologicalSort(); 
+    } 
+  
+    // Driver program to test above functions 
+    public static void main(String[] args) 
+    { 
+        String[] words = {"caa", "aaa", "aab"}; 
+        printOrder(words, 3); 
+    } 
+} 
+  
+Output:
+c a b
+Time Complexity: The first step to create a graph takes O(n + alhpa)
+ time where n is number of given words and alpha is number of characters in given alphabet. The second step is also 
+ topological sorting. Note that there would be alpha vertices and at-most (n-1) edges in the graph. The time complexity of
+ topological sorting is O(V+E) which is O(n + aplha) here. So overall time complexity is O(n + aplha) + O(n + aplha) which is O(n + aplha).
+
+Exercise:
+The above code doesn’t work when the input is not valid. For example {“aba”, “bba”, “aaa”} 
+is not valid, because from first two words, we can deduce ‘a’ should appear before ‘b’, but from last two words, 
+we can deduce ‘b’ should appear before ‘a’ which is not possible. Extend the above program to handle invalid inputs and generate the output as “Not valid”.
+
+This article is contributed by Piyush Gupta. Please write comments if you find anything incorrect, or you want to 
+share more information about the topic discussed above.
+
+
+
+6)https://www.geeksforgeeks.org/amazon-interview-experience-set-324-sde2/ -> Given an array of words which comes in a 
+dictionary of some language in the same order.
+tell if its possible?
+
+Solution -> not given
+
+
+7) https://www.interviewbit.com/problems/gas-station/ - > There are N gas stations along a circular route, where the amount of gas at station i is gas[i].
+
+You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). 
+You begin the journey with an empty tank at one of the gas stations.
+
+Return the minimum starting gas station’s index if you can travel around the circuit once, otherwise return -1.
+
+You can only travel in one direction. i to i+1, i+2, ... n-1, 0, 1, 2..
+Completing the circuit means starting at i and ending up at i again.
+
+Example :
+
+Input :
+      Gas :   [1, 2]
+      Cost :  [2, 1]
+
+Output : 1 
+
+If you start from index 0, you can fill in gas[0] = 1 amount of gas. Now your tank has 1 unit of gas. 
+But you need cost[0] = 2 gas to travel to station 1. 
+If you start from index 1, you can fill in gas[1] = 2 amount of gas. Now your tank has 2 units of gas. 
+You need cost[1] = 1 gas to get to station 0. So, you travel to station 0 and still have 1 unit of gas left over. 
+You fill in gas[0] = 1 unit of additional gas, making your current gas = 2. It costs you cost[0] = 2 to get to station 1, which you do and complete the circuit. 
+
+
+Solution -> not given
+
+
+8)https://www.interviewbit.com/problems/longest-increasing-subsequence/ ->Find the longest increasing subsequence of a given sequence / array.
+
+In other words, find a subsequence of array in which the subsequence’s elements are in strictly increasing order, 
+and in which the subsequence is as long as possible. 
+This subsequence is not necessarily contiguous, or unique.
+In this case, we only care about the length of the longest increasing subsequence.
+
+Example :
+
+Input : [0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]
+Output : 6
+The sequence : [0, 2, 6, 9, 13, 15] or [0, 4, 6, 9, 11, 15] or [0, 4, 6, 9, 13, 15]
+
+
+Solution not given
+
+
+9)https://www.interviewbit.com/problems/max-product-subarray/  -> Find the contiguous subarray within an array 
+(containing at least one number) which has the largest product.
+Return an integer corresponding to the maximum product possible.
+
+Example :
+
+Input : [2, 3, -2, 4]
+Return : 6 
+
+Possible with [2, 3]
+
+
+Solution -> not given
+
+10)https://www.interviewbit.com/problems/ways-to-decode/ - > A message containing letters from A-Z is being encoded to numbers using the following mapping:
+
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+Given an encoded message containing digits, determine the total number of ways to decode it.
+
+Example :
+
+Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+
+The number of ways decoding "12" is 2.
+
+11)https://www.interviewbit.com/problems/best-time-to-buy-and-sell-stocks-ii/ -> Say you have an array for which
+ the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like 
+(ie, buy one and sell one share of the stock multiple times). However, you may not engage in multiple
+ transactions at the same time (ie, you must sell the stock before you buy again).
+
+Example :
+
+Input : [1 2 3]
+Return : 2
+ 
+ 
+Solution -> not given
+
+
+12) https://www.interviewbit.com/problems/best-time-to-buy-and-sell-stocks-iii/ - >  Say you have an array for which the 
+ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete at most two transactions.
+
+Note:
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+Example :
+
+Input : [1 2 1 2]
+Output : 2
+
+Explanation : 
+  Day 1 : Buy 
+  Day 2 : Sell
+  Day 3 : Buy
+  Day 4 : Sell
+ 
+		
+ 
+ 
+ Solution - not given
+ 
+ 
+ 
+13) https://www.interviewbit.com/problems/best-time-to-buy-and-sell-stocks-i/ - > Say you have an array for which the ith element is the price of a given stock on day i.
+
+If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.
+
+Example :
+
+Input : [1 2]
+Return :  1
+
+
+Solution -> not given
+
+
+
+14) https://www.interviewbit.com/problems/palindrome-partitioning-ii/ -> Given a string s, partition s such that every 
+substring of the partition is a palindrome.
+
+Return the minimum cuts needed for a palindrome partitioning of s.
+
+Example : 
+Given 
+s = "aab",
+Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut.
+
+
+Solution - not given
+
+15)https://www.interviewbit.com/problems/min-sum-path-in-matrix/ -> Given a m x n grid filled with non-negative numbers,
+ find a path from top left to bottom right which minimizes the sum of all numbers along its path.
+
+ Note: You can only move either down or right at any point in time. 
+Example :
+
+Input : 
+
+    [  1 3 2
+       4 3 1
+       5 6 1
+    ]
+
+Output : 8
+     1 -> 3 -> 2 -> 1 -> 1
+
+	 
+	 
+Solution -> not given
+
+
+16)https://www.interviewbit.com/problems/min-jumps-array/ -> Given an array of non-negative integers, you are initially positioned at the first index of the array.
+
+Each element in the array represents your maximum jump length at that position.
+
+Your goal is to reach the last index in the minimum number of jumps.
+
+Example :
+Given array A = [2,3,1,1,4]
+
+The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
+
+If it is not possible to reach the end index, return -1.
+
+
+Solution - > not given
+
+
+17)https://www.interviewbit.com/problems/stairs/ -> You are climbing a stair case. It takes n steps to reach to the top.
+
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+Example :
+
+Input : 3
+Return : 3
+
+Steps : [1 1 1], [1 2], [2 1]
+
+
+
+Solution -> not given
+
+
+18)https://www.geeksforgeeks.org/amazon-interview-experience-set-294-experienced/ - > Pivoted array search,  modified that array can have 
+duplicate values need to 
+return first occurance of element.
+
+Solution ->  not given
+
+
+19)https://www.geeksforgeeks.org/amazon-interview-experience-set-294-experienced/ ->Integer stream is coming find largest K element.(K is fixed)
+
+
+20)https://www.geeksforgeeks.org/amazon-interview-experience-sde2/ -> Amazon sell physical product, if amazon starts 
+selling the services and user start buying the services from  different vendors (Airtel/Netflix/ ..).
+Amazon should start auto renewal of such services at the time of service expiry .
+
+Ex:- Customer buy service for car cleaning from any seller (register with amazon) for
+ 300Rs for 30 days . then at the time of its expiry this service should auto renew  for next 30 days.
+ 
+ 
+ 
+ 
+ 
+ 

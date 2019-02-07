@@ -199,3 +199,69 @@ solution -> This I can solve. will solve after completion of the task given by s
 
 
 
+16)https://www.interviewbit.com/problems/unique-binary-search-trees-ii/ -> Given A, how many structurally unique BST’s (binary search trees) that store values 1...A?
+
+Example :
+
+Given A = 3, there are a total of 5 unique BST’s.
+
+
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
+   
+   
+ Solution - not given
+ 
+ 
+17)https://www.interviewbit.com/problems/swap-list-nodes-in-pairs/ - > Given a linked list, swap every two adjacent nodes and return its head.
+
+For example,
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+
+Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
+
+Solution - not given
+
+
+
+18)https://www.interviewbit.com/problems/reorder-list/ - >  Given a singly linked list
+
+    L: L0 → L1 → … → Ln-1 → Ln,
+reorder it to:
+
+    L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → …
+You must do this in-place without altering the nodes’ values.
+
+For example,
+Given {1,2,3,4}, reorder it to {1,4,2,3}
+
+
+Solution -> not given
+
+
+19) https://www.interviewbit.com/problems/merge-two-sorted-lists/ - >  Merge two sorted linked lists and return it as a new list. 
+The new list should be made by splicing together the nodes of the first two lists, and should also be sorted.
+
+For example, given following linked lists :
+
+  5 -> 8 -> 20 
+  4 -> 11 -> 15
+The merged list should be :
+
+4 -> 5 -> 8 -> 11 -> 15 -> 20
+
+
+Solution -> not given
+
+20)https://www.interviewbit.com/problems/add-two-numbers-as-lists/ - >  You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+
+    342 + 465 = 807
+Make sure there are no trailing zeros in the output list
+So, 7 -> 0 -> 8 -> 0 is not a valid response even though the value is still 807.
+
