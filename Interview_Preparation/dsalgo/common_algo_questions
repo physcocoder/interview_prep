@@ -1,0 +1,635 @@
+1) Write a program to add two numbers in base 14 -> https://www.geeksforgeeks.org/write-a-program-to-add-two-numbers-in-base-14/
+
+Solution -> # include <stdio.h> 
+# include <stdlib.h> 
+# define bool int 
+  
+int getNumeralValue(char ); 
+char getNumeral(int ); 
+  
+/* Function to add two numbers in base 14 */
+char *sumBase14(char *num1,  char *num2) 
+{ 
+   int l1 = strlen(num1); 
+   int l2 = strlen(num2);   
+   char *res;  
+   int i; 
+   int nml1, nml2, res_nml;    
+   bool carry = 0; 
+     
+   if(l1 != l2) 
+   { 
+     printf("Function doesn't support numbers of different"
+            " lengths. If you want to add such numbers then"
+            " prefix smaller number with required no. of zeroes");  
+     getchar();          
+     assert(0); 
+   }       
+  
+   /* Note the size of the allocated memory is one  
+     more than i/p lenghts for the cases where we  
+     have carry at the last like adding D1 and A1 */   
+   res = (char *)malloc(sizeof(char)*(l1 + 1)); 
+        
+   /* Add all numerals from right to left */
+   for(i = l1-1; i >= 0; i--) 
+   { 
+     /* Get decimal values of the numerals of  
+       i/p numbers*/          
+     nml1 = getNumeralValue(num1[i]); 
+     nml2 = getNumeralValue(num2[i]); 
+       
+     /* Add decimal values of numerals and carry */
+     res_nml = carry + nml1 + nml2; 
+       
+     /* Check if we have carry for next addition  
+        of numerals */
+     if(res_nml >= 14) 
+     { 
+       carry = 1; 
+       res_nml -= 14; 
+     }    
+     else 
+     { 
+       carry = 0;      
+     }        
+     res[i+1] = getNumeral(res_nml); 
+   } 
+        
+   /* if there is no carry after last iteration  
+      then result should not include 0th character  
+      of the resultant string */
+   if(carry == 0) 
+     return (res + 1);    
+  
+   /* if we have carry after last iteration then  
+     result should include 0th character */
+   res[0] = '1'; 
+   return res; 
+} 
+  
+/* Function to get value of a numeral  
+  For example it returns 10 for input 'A'  
+  1 for '1', etc */
+int getNumeralValue(char num) 
+{ 
+  if( num >= '0' && num <= '9') 
+    return (num - '0'); 
+  if( num >= 'A' && num <= 'D')   
+    return (num - 'A' + 10); 
+          
+  /* If we reach this line caller is giving  
+    invalid character so we assert and fail*/  
+  assert(0); 
+} 
+  
+/* Function to get numeral for a value.    
+  For example it returns 'A' for input 10  
+  '1' for 1, etc */
+char getNumeral(int val) 
+{ 
+  if( val >= 0 && val <= 9) 
+    return (val + '0'); 
+  if( val >= 10 && val <= 14)   
+    return (val + 'A' - 10); 
+      
+  /* If we reach this line caller is giving  
+    invalid no. so we assert and fail*/      
+  assert(0); 
+} 
+  
+/*Driver program to test above functions*/
+int main() 
+{ 
+    char *num1 = "DC2"; 
+    char *num2 = "0A3"; 
+  
+    printf("Result is %s", sumBase14(num1, num2));      
+    getchar(); 
+    return 0; 
+} 
+
+
+
+2) Multiply two integers without using multiplication, division and bitwise operators, and no loops -> https://www.geeksforgeeks.org/multiply-two-numbers-without-using-multiply-division-bitwise-operators-and-no-loops/
+
+Solution -> def multiply(x,y): 
+  
+    # 0 multiplied with anything 
+    # gives 0  
+    if(y == 0): 
+        return 0
+  
+    # Add x one by one  
+    if(y > 0 ): 
+        return (x + multiply(x, y - 1)) 
+  
+    # The case where y is negative 
+    if(y < 0 ): 
+        return -multiply(x, -y) 
+      
+# Driver code 
+print(multiply(5, -11)) 
+
+3) Write you own Power without using multiplication(*) and division(/) operators -> https://www.geeksforgeeks.org/write-you-own-power-without-using-multiplication-and-division/
+
+Solution -> # Python 3 code for power 
+# function  
+  
+# Works only if a >= 0 and b >= 0  
+def pow(a,b): 
+    if(b==0): 
+        return 1
+          
+    answer=a 
+    increment=a 
+      
+    for i in range(1,b): 
+        for j in range (1,a): 
+            answer+=increment 
+        increment=answer 
+    return answer 
+  
+# drive code 
+print(pow(5,3)) 
+
+
+4) Sieve of Eratosthenes -> https://www.geeksforgeeks.org/sieve-of-eratosthenes/
+
+Solution -> # Python program to print all primes smaller than or equal to 
+# n using Sieve of Eratosthenes 
+  
+def SieveOfEratosthenes(n): 
+      
+    # Create a boolean array "prime[0..n]" and initialize 
+    #  all entries it as true. A value in prime[i] will 
+    # finally be false if i is Not a prime, else true. 
+    prime = [True for i in range(n+1)] 
+    p = 2
+    while (p * p <= n): 
+          
+        # If prime[p] is not changed, then it is a prime 
+        if (prime[p] == True): 
+              
+            # Update all multiples of p 
+            for i in range(p * p, n+1, p): 
+                prime[i] = False
+        p += 1
+      
+    # Print all prime numbers 
+    for p in range(2, n): 
+        if prime[p]: 
+            print p, 
+  
+# driver program 
+if __name__=='__main__': 
+    n = 30
+    print "Following are the prime numbers smaller", 
+    print "than or equal to", n 
+    SieveOfEratosthenes(n) 
+
+
+
+5)Number which has the maximum number of distinct prime factors in the range M to N ->https://www.geeksforgeeks.org/number-which-has-the-maximum-number-of-distinct-prime-factors-in-range-m-to-n/
+
+
+Solution -> # Python 3 program to print the 
+# Number which has the maximum number 
+# of distinct prime factors of 
+# numbers in range m to n 
+  
+# Function to return the maximum number 
+def maximumNumberDistinctPrimeRange(m, n): 
+  
+    # array to store the number  
+    # of distinct primes 
+    factorCount = [0] * (n + 1) 
+  
+    # true if index 'i' is a prime 
+    prime = [False] * (n + 1) 
+  
+    # initializing the number of 
+    # factors to 0 and 
+    for i in range(n + 1) : 
+        factorCount[i] = 0
+        prime[i] = True # Used in Sieve 
+  
+    for i in range(2, n + 1) : 
+  
+        # condition works only when 'i'  
+        # is prime, hence for factors of 
+        # all prime number, the prime  
+        # status is changed to false 
+        if (prime[i] == True) : 
+  
+            # Number is prime 
+            factorCount[i] = 1
+  
+            # number of factor of a  
+            # prime number is 1 
+            for j in range(i * 2, n + 1, i) : 
+  
+                # incrementing factorCount all 
+                # the factors of i 
+                factorCount[j] += 1
+  
+                # and changing prime status 
+                # to false 
+                prime[j] = False
+  
+    # Initialize the max and num 
+    max = factorCount[m] 
+    num = m 
+  
+    # Gets the maximum number 
+    for i in range(m, n + 1) : 
+  
+        # Gets the maximum number 
+        if (factorCount[i] > max) : 
+            max = factorCount[i] 
+            num = i 
+    return num 
+  
+# Driver code 
+if __name__ == "__main__": 
+    m = 4
+    n = 6
+      
+    # Calling function 
+    print(maximumNumberDistinctPrimeRange(m, n)) 
+  
+  
+6) DFA based division
+Deterministic Finite Automaton (DFA) can be used to check whether a number “num” is divisible by “k” or not.
+ If the number is not divisible, remainder can also be obtained using DFA.
+We consider the binary representation of ‘num’ and build a DFA with k states. The DFA has 
+transition function for both 0 and 1. Once the DFA is built, we process ‘num’ over the DFA to get remainder.
+
+Let us walk through an example. Suppose we want to check whether a given number ‘num’ 
+is divisible by 3 or not. Any number can be written in the form: num = 3*a + b where 
+‘a’ is the quotient and ‘b’ is the remainder.
+For 3, there can be 3 states in DFA, each corresponding to remainder 0, 1 and 2. And each state can have two
+ transitions corresponding 0 and 1 (considering the binary representation of given ‘num’).
+The transition function F(p, x) = q tells that on reading alphabet x, we move from state p to state q. Let us name 
+the states as 0, 1 and 2. The initial state will always be 0. The final state indicates the remainder.
+If the final state is 0, the number is divisible. -> https://www.geeksforgeeks.org/dfa-based-division/
+
+
+Solution -> #include <stdio.h> 
+#include <stdlib.h> 
+  
+// Function to build DFA for divisor k 
+void preprocess(int k, int Table[][2]) 
+{ 
+    int trans0, trans1; 
+  
+    // The following loop calculates the two transitions for each state, 
+    // starting from state 0 
+    for (int state=0; state<k; ++state) 
+    { 
+        // Calculate next state for bit 0 
+        trans0 = state<<1; 
+        Table[state][0] = (trans0 < k)? trans0: trans0-k; 
+  
+        // Calculate next state for bit 1 
+        trans1 = (state<<1) + 1; 
+        Table[state][1] = (trans1 < k)? trans1: trans1-k; 
+    } 
+} 
+  
+// A recursive utility function that takes a 'num' and DFA (transition 
+// table) as input and process 'num' bit by bit over DFA 
+void isDivisibleUtil(int num, int* state, int Table[][2]) 
+{ 
+    // process "num" bit by bit from MSB to LSB 
+    if (num != 0) 
+    { 
+        isDivisibleUtil(num>>1, state, Table); 
+        *state = Table[*state][num&1]; 
+    } 
+} 
+  
+// The main function that divides 'num' by k and returns the remainder 
+int isDivisible (int num, int k) 
+{ 
+    // Allocate memory for transition table. The table will have k*2 entries 
+    int (*Table)[2] = (int (*)[2])malloc(k*sizeof(*Table)); 
+  
+    // Fill the transition table 
+    preprocess(k, Table); 
+  
+    // Process ‘num’ over DFA and get the remainder 
+    int state = 0; 
+    isDivisibleUtil(num, &state, Table); 
+  
+    // Note that the final value of state is the remainder 
+    return state; 
+} 
+  
+// Driver program to test above functions 
+int main() 
+{ 
+    int num = 47; // Number to be divided 
+    int k = 5; // Divisor 
+  
+    int remainder = isDivisible (num, k); 
+  
+    if (remainder == 0) 
+        printf("Divisible\n"); 
+    else
+        printf("Not Divisible: Remainder is %d\n", remainder); 
+  
+    return 0; 
+} 
+Output:
+
+Not Divisible: Remainder is 2
+DFA based division can be useful if we have a binary stream as input and we want to check for divisibility of the decimal value
+of stream at any time.
+
+
+7)Generate integer from 1 to 7 with equal probability -> https://www.geeksforgeeks.org/generate-integer-from-1-to-7-with-equal-probability/
+
+Solution -> # Python3 code to demonstrate  
+# expression returns each integer 
+# from 1 to 25 exactly once 
+  
+if name == '__main__': 
+      
+    for first in range(1, 6): 
+        for second in range(1, 6): 
+                print(5 * first + second - 5) 
+				
+8) Given a number, find the next smallest palindrome -> https://www.geeksforgeeks.org/given-a-number-find-next-smallest-palindrome-larger-than-this-number/
+
+Solution -> # Returns next palindrome of a given number num[].  
+# This function is for input type 2 and 3  
+def generateNextPalindromeUtil (num, n) : 
+  
+    # find the index of mid digit  
+    mid = int(n/2 ) 
+  
+    # A bool variable to check if copy of left 
+    # side to right is sufficient or not  
+    leftsmaller = False
+  
+    # end of left side is always 'mid -1'  
+    i = mid - 1
+  
+    # Begining of right side depends 
+    # if n is odd or even  
+    j = mid + 1 if (n % 2) else mid  
+  
+    # Initially, ignore the middle same digits  
+    while (i >= 0 and num[i] == num[j]) : 
+        i-=1
+        j+=1
+  
+    # Find if the middle digit(s) need to be 
+    # incremented or not (or copying left  
+    # side is not sufficient)  
+    if ( i < 0 or num[i] < num[j]):  
+        leftsmaller = True
+  
+    # Copy the mirror of left to tight  
+    while (i >= 0) : 
+      
+        num[j] = num[i]  
+        j+=1
+        i-=1
+      
+  
+    # Handle the case where middle  
+    # digit(s) must be incremented.  
+    # This part of code is for CASE 1 and CASE 2.2  
+    if (leftsmaller == True) : 
+      
+        carry = 1
+        i = mid - 1
+  
+        # If there are odd digits, then increment  
+        # the middle digit and store the carry  
+        if (n%2 == 1) : 
+          
+            num[mid] += carry  
+            carry = int(num[mid] / 10 ) 
+            num[mid] %= 10
+            j = mid + 1
+          
+        else: 
+            j = mid  
+  
+        # Add 1 to the rightmost digit of the  
+        # left side, propagate the carry  
+        # towards MSB digit and simultaneously  
+        # copying mirror of the left side  
+        # to the right side.  
+        while (i >= 0) : 
+          
+            num[i] += carry  
+            carry = num[i] / 10
+            num[i] %= 10
+            num[j] = num[i] # copy mirror to right 
+            j+=1
+            i-=1
+          
+# The function that prints next  
+# palindrome of a given number num[]  
+# with n digits.  
+def generateNextPalindrome(num, n ) : 
+  
+    print("\nNext palindrome is:")  
+  
+    # Input type 1: All the digits are 9, simply o/p 1  
+    # followed by n-1 0's followed by 1.  
+    if( AreAll9s( num, n ) == True) : 
+      
+        print( "1")  
+        for i in range(1, n):  
+            print( "0" )  
+        print( "1")  
+      
+  
+    # Input type 2 and 3  
+    else: 
+      
+        generateNextPalindromeUtil ( num, n )  
+  
+        # print the result  
+        printArray (num, n)  
+      
+# A utility function to check if num has all 9s  
+def AreAll9s(num, n ):  
+    for i in range(1, n): 
+        if( num[i] != 9 ) : 
+            return 0
+    return 1
+  
+  
+# Utility that prints out an array on a line  
+def printArray(arr, n):  
+  
+    for i in range(0, n):  
+        print(int(arr[i]),end=" ")  
+    print()  
+  
+  
+# Driver Program to test above function  
+if __name__ == "__main__": 
+    num = [9, 4, 1, 8, 7, 9, 7, 8, 3, 2, 2] 
+    n = len(num) 
+    generateNextPalindrome( num, n )  
+  
+# This code is contributed by Smitha Dinesh Semwal 
+
+Output:
+Next palindrome is:
+9 4 1 8 8 0 8 8 1 4 9
+
+
+9)Lexicographic rank of a string -> https://www.geeksforgeeks.org/lexicographic-rank-of-a-string/
+
+Solution -> # Python program to find lexicographic  
+# rank of a string 
+  
+# A utility function to find factorial 
+# of n 
+def fact(n) : 
+    f = 1
+    while n >= 1 : 
+        f = f * n 
+        n = n - 1
+    return f 
+      
+# A utility function to count smaller  
+# characters on right of arr[low] 
+def findSmallerInRight(st, low, high) : 
+      
+    countRight = 0
+    i = low + 1
+    while i <= high : 
+        if st[i] < st[low] : 
+            countRight = countRight + 1
+        i = i + 1
+   
+    return countRight 
+      
+# A function to find rank of a string 
+# in all permutations of characters 
+def findRank (st) : 
+    ln = len(st) 
+    mul = fact(ln) 
+    rank = 1
+    i = 0 
+   
+    while i < ln : 
+          
+        mul = mul / (ln - i) 
+          
+        # count number of chars smaller  
+        # than str[i] fron str[i+1] to 
+        # str[len-1] 
+        countRight = findSmallerInRight(st, i, ln-1) 
+   
+        rank = rank + countRight * mul 
+        i = i + 1
+          
+    return rank 
+      
+      
+# Driver program to test above function 
+st = "string"
+print (findRank(st)) 
+
+10) Measure one litre using two vessels and infinite water supply -> https://www.geeksforgeeks.org/measure-1-litre-from-two-vessels-infinite-water-supply/
+
+Solution -> include <iostream> 
+using namespace std; 
+  
+// A utility function to get GCD of two numbers 
+int gcd(int a, int b) { return b? gcd(b, a % b) : a; } 
+  
+// Class to represent a Vessel 
+class Vessel 
+{ 
+    // A vessel has capacity, and current amount of water in it 
+    int capacity, current; 
+public: 
+    // Constructor: initializes capacity as given, and current as 0 
+    Vessel(int capacity) { this->capacity = capacity; current = 0; } 
+  
+    // The main function to fill one litre in this vessel. Capacity of V2 
+    // must be greater than this vessel and two capacities must be co-prime 
+    void makeOneLitre(Vessel &V2); 
+  
+    // Fills vessel with given amount and returns the amount of water  
+    // transferred to it. If the vessel becomes full, then the vessel  
+    // is made empty. 
+    int transfer(int amount); 
+}; 
+  
+// The main function to fill one litre in this vessel. Capacity  
+// of V2 must be greater than this vessel and two capacities  
+// must be coprime 
+void Vessel:: makeOneLitre(Vessel &V2) 
+{ 
+    // solution exists iff a and b are co-prime 
+    if (gcd(capacity, V2.capacity) != 1) 
+        return; 
+  
+    while (current != 1) 
+    { 
+        // fill A (smaller vessel) 
+        if (current == 0) 
+            current = capacity; 
+  
+        cout << "Vessel 1: " << current << "   Vessel 2: " 
+             << V2.current << endl; 
+  
+        // Transfer water from V1 to V2 and reduce current of V1 by 
+        //  the amount equal to transferred water 
+        current = current - V2.transfer(current); 
+    } 
+  
+    // Finally, there will be 1 litre in vessel 1 
+    cout << "Vessel 1: " << current << "   Vessel 2: " 
+         << V2.current << endl; 
+} 
+  
+// Fills vessel with given amount and returns the amount of water  
+// transferred to it. If the vessel becomes full, then the vessel  
+// is made empty 
+int Vessel::transfer(int amount) 
+{ 
+    // If the vessel can accommodate the given amount 
+    if (current + amount < capacity) 
+    { 
+        current += amount; 
+        return amount; 
+    } 
+  
+    // If the vessel cannot accommodate the given amount, then 
+    // store the amount of water transferred 
+    int transferred = capacity - current; 
+  
+    // Since the vessel becomes full, make the vessel 
+    // empty so that it can be filled again 
+    current = 0; 
+  
+    return transferred; 
+} 
+  
+// Driver program to test above function 
+int main() 
+{ 
+    int a = 3, b = 7;  // a must be smaller than b 
+  
+    // Create two vessels of capacities a and b 
+    Vessel V1(a), V2(b); 
+  
+    // Get 1 litre in first vessel 
+    V1.makeOneLitre(V2); 
+  
+    return 0; 
+} 
+
